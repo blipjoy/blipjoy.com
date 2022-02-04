@@ -1,8 +1,26 @@
 import { Enum, Variant } from './enum.js';
 
+/** @type {Number} */
+const GLITCH_MIN = 25000;
+
+/** @type {Number} */
+const GLITCH_MAX = 60000;
+
+/** @type {Number} */
+const RESET_MIN = 50;
+
+/** @type {Number} */
+const RESET_MAX = 200;
+
 export class BlipJoyAnimation {
   /** @type {CanvasRenderingContext2D} */
   #ctx;
+
+  /** @type {Number} */
+  #width;
+
+  /** @type {Number} */
+  #height;
 
   /** @type {AnimState[]} */
   #state;
@@ -12,6 +30,9 @@ export class BlipJoyAnimation {
 
   /** @type {Boolean} */
   #running = false;
+
+  /** @type {ImageData | null} */
+  #pixels = null;
 
   constructor() {
     /** @type {HTMLCanvasElement | null} */
@@ -25,6 +46,8 @@ export class BlipJoyAnimation {
     }
 
     this.#ctx = ctx;
+    this.#width = canvas.width;
+    this.#height = canvas.height;
     this.#state = [
       new AnimState(500, DrawEnum.B()),
       new AnimState(200, DrawEnum.L()),
@@ -33,6 +56,9 @@ export class BlipJoyAnimation {
       new AnimState(150, DrawEnum.J()),
       new AnimState(250, DrawEnum.O()),
       new AnimState(500, DrawEnum.Y()),
+      new AnimState(Math.random() * GLITCH_MAX + GLITCH_MIN, DrawEnum.GLITCH_INIT()),
+      new AnimState(Math.random() * RESET_MAX + RESET_MIN, DrawEnum.GLITCH_CONTINUE()),
+      new AnimState(Math.random() * RESET_MAX + RESET_MIN, DrawEnum.RESET()),
     ];
 
     this.#invader();
@@ -65,27 +91,19 @@ export class BlipJoyAnimation {
   }
 
   #step() {
-    if (this.#index >= this.#state.length) {
-      throw new RangeError('step() called after animation completion');
-    }
-
     const state = this.#state[this.#index];
     if (state.remaining <= 0) {
-      this.#index += 1;
-
-      this.#action(state.draw);
+      this.#action(state);
     }
 
-    if (this.#index < this.#state.length) {
-      setTimeout(this.#step.bind(this), this.#state[this.#index].remaining);
-    }
+    setTimeout(this.#step.bind(this), this.#state[this.#index].remaining);
   }
 
-  /** @arg {Variant} draw - The action to perform when the timer expires. */
-  #action(draw) {
+  /** @arg {AnimState} state - The action to perform when the timer expires. */
+  #action(state) {
     const ctx = this.#ctx;
 
-    switch (draw.value) {
+    switch (state.draw.value) {
     case DrawEnum.VARIANT_B:
       ctx.fillStyle = '#fff';
       ctx.fillRect(0, 144, 16, 80);
@@ -94,16 +112,19 @@ export class BlipJoyAnimation {
       ctx.fillRect(16, 176, 16, 16);
       ctx.fillRect(32, 192, 16, 16);
       ctx.fillRect(16, 208, 16, 16);
+      this.#index = DrawEnum.VARIANT_L;
       break;
 
     case DrawEnum.VARIANT_L:
       ctx.fillRect(64, 144, 16, 80);
       ctx.fillRect(80, 208, 32, 16);
+      this.#index = DrawEnum.VARIANT_I;
       break;
 
     case DrawEnum.VARIANT_I:
       ctx.fillRect(128, 144, 16, 16);
       ctx.fillRect(128, 176, 16, 48);
+      this.#index = DrawEnum.VARIANT_P;
       break;
 
     case DrawEnum.VARIANT_P:
@@ -111,12 +132,14 @@ export class BlipJoyAnimation {
       ctx.fillRect(176, 144, 16, 16);
       ctx.fillRect(192, 160, 16, 16);
       ctx.fillRect(176, 176, 16, 16);
+      this.#index = DrawEnum.VARIANT_J;
       break;
 
     case DrawEnum.VARIANT_J:
       ctx.fillRect(208, 192, 16, 16);
       ctx.fillRect(224, 208, 16, 16);
       ctx.fillRect(240, 144, 16, 64);
+      this.#index = DrawEnum.VARIANT_O;
       break;
 
     case DrawEnum.VARIANT_O:
@@ -124,12 +147,55 @@ export class BlipJoyAnimation {
       ctx.fillRect(272, 160, 16, 48);
       ctx.fillRect(288, 208, 16, 16);
       ctx.fillRect(304, 160, 16, 48);
+      this.#index = DrawEnum.VARIANT_Y;
       break;
 
     case DrawEnum.VARIANT_Y:
       ctx.fillRect(336, 144, 16, 32);
       ctx.fillRect(368, 144, 16, 32);
       ctx.fillRect(352, 176, 16, 48);
+      this.#index = DrawEnum.VARIANT_GLITCH_INIT;
+      break;
+
+    case DrawEnum.VARIANT_GLITCH_INIT:
+      this.#pixels = ctx.getImageData(0, 0, this.#width, this.#height);
+      state.reset(Math.random() * GLITCH_MAX + GLITCH_MIN);
+      this.#index = DrawEnum.VARIANT_GLITCH_CONTINUE;
+      break;
+
+    case DrawEnum.VARIANT_GLITCH_CONTINUE:
+      for (let i = 0; i < Math.floor(Math.random() * 60 + 20); i++) {
+        const sx = Math.max(Math.floor(Math.random() * this.#width - 64), 0);
+        const sy = Math.floor(Math.random() * this.#height);
+        const dx = Math.max(Math.floor(Math.random() * this.#width - 64), 0);
+        const dy = Math.floor(Math.random() * this.#height);
+        const w = Math.floor(Math.random() * this.#width + 32);
+        const h = Math.floor(Math.random() * 8 + 1);
+
+        createImageBitmap(ctx.canvas, sx, sy, w, h).then((bitmap) => {
+          ctx.drawImage(bitmap, dx, dy);
+          ctx.clearRect(sx, sy, w, h);
+        });
+      }
+
+      state.reset(Math.random() * RESET_MAX + RESET_MIN);
+
+      // Advance to the next state more often than not
+      if (Math.floor(Math.random() * 8) !== 0) {
+        console.log('-> reset');
+        this.#index = DrawEnum.VARIANT_RESET;
+      } else {
+        console.log('-> continue');
+      }
+      break;
+
+    case DrawEnum.VARIANT_RESET:
+      if (this.#pixels != null) {
+        ctx.putImageData(this.#pixels, 0, 0);
+      }
+
+      state.reset(Math.random() * RESET_MAX + RESET_MIN);
+      this.#index = DrawEnum.VARIANT_GLITCH_INIT;
       break;
 
     default:
@@ -173,6 +239,12 @@ class AnimState {
     const elapsed = now - this.#start;
     return elapsed < this.#duration ? this.#duration - elapsed : 0;
   }
+
+  /** @arg {Number} duration */
+  reset(duration) {
+    this.#start = 0;
+    this.#duration = duration;
+  }
 }
 
 class DrawEnum extends Enum {
@@ -183,6 +255,9 @@ class DrawEnum extends Enum {
   static VARIANT_J = 4;
   static VARIANT_O = 5;
   static VARIANT_Y = 6;
+  static VARIANT_GLITCH_INIT = 7;
+  static VARIANT_GLITCH_CONTINUE = 8;
+  static VARIANT_RESET = 9;
 
   /** @return {Variant} */
   static B() {
@@ -217,5 +292,20 @@ class DrawEnum extends Enum {
   /** @return {Variant} */
   static Y() {
     return new Variant(new Enum(DrawEnum.VARIANT_Y));
+  }
+
+  /** @return {Variant} */
+  static GLITCH_INIT() {
+    return new Variant(new Enum(DrawEnum.VARIANT_GLITCH_INIT));
+  }
+
+  /** @return {Variant} */
+  static GLITCH_CONTINUE() {
+    return new Variant(new Enum(DrawEnum.VARIANT_GLITCH_CONTINUE));
+  }
+
+  /** @return {Variant} */
+  static RESET() {
+    return new Variant(new Enum(DrawEnum.VARIANT_RESET));
   }
 }

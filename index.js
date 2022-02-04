@@ -1,3 +1,11 @@
 import { BlipJoyAnimation } from './js/anim.js';
 
-new BlipJoyAnimation();
+function main() {
+  new BlipJoyAnimation();
+}
+
+if (document.readyState === 'loading') {
+  window.addEventListener('DOMContentLoaded', main);
+} else {
+  main();
+}

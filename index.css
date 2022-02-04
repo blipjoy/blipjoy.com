@@ -1,6 +1,48 @@
 body {
-  background: url('img/blipjoy-bg1.png') #161616 no-repeat fixed top left;
+  background: #161616 no-repeat fixed top left;
   color: #999;
   font-family: Verdana, Tahoma, Helvetica, sans-serif;
   font-weight: 600;
+}
+
+a {
+  color: #4b0082;
+}
+
+a:visited {
+  color: #4d469c;
+}
+
+a:hover {
+  color: #4495ff;
+}
+
+main {
+  margin: auto;
+  margin-top: 100px;
+  width: 700px;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#anim {
+  image-rendering: pixelated;
+}
+
+nav {
+  margin-top: 32px;
+}
+
+nav > a {
+  font-weight: normal;
+  text-decoration: none;
+}
+
+nav > a:not(:last-child)::after {
+  content: ' |';
+  color: #444;
 }

@@ -1,4 +1,5 @@
 import { Enum, Variant } from './enum.js';
+import { get_css_prop } from './css.js';
 
 /** @type {Number} */
 const GLITCH_MIN = 25000;
@@ -34,13 +35,19 @@ export class BlipJoyAnimation {
   /** @type {ImageData | null} */
   #pixels = null;
 
+  /** @type {String} */
+  #invader_color;
+
+  /** @type {String} */
+  #text_color;
+
   constructor() {
     /** @type {HTMLCanvasElement | null} */
-    let canvas = document.querySelector('#anim');
+    const canvas = document.querySelector('#anim');
     if (canvas === null) {
       throw new TypeError('#anim element does not exist');
     }
-    let ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
     if (ctx === null) {
       throw new TypeError('Unable to get a 2D rendering context');
     }
@@ -60,6 +67,8 @@ export class BlipJoyAnimation {
       new AnimState(Math.random() * RESET_MAX + RESET_MIN, DrawEnum.GLITCH_CONTINUE()),
       new AnimState(Math.random() * RESET_MAX + RESET_MIN, DrawEnum.RESET()),
     ];
+    this.#invader_color = get_css_prop('--logo-color');
+    this.#text_color = get_css_prop('--logo-text-color');
 
     this.#invader();
     this.#step();
@@ -70,7 +79,7 @@ export class BlipJoyAnimation {
     const ctx = this.#ctx;
 
     // Left half
-    ctx.fillStyle = '#4b0082';
+    ctx.fillStyle = this.#invader_color;
     ctx.fillRect(128, 0, 16, 16);
     ctx.fillRect(144, 16, 16, 16);
     ctx.fillRect(160, 32, 16, 16);
@@ -105,7 +114,7 @@ export class BlipJoyAnimation {
 
     switch (state.draw.value) {
     case DrawEnum.VARIANT_B:
-      ctx.fillStyle = '#fff';
+      ctx.fillStyle = this.#text_color;
       ctx.fillRect(0, 144, 16, 80);
       ctx.fillRect(16, 144, 16, 16);
       ctx.fillRect(32, 160, 16, 16);
@@ -182,10 +191,7 @@ export class BlipJoyAnimation {
 
       // Advance to the next state more often than not
       if (Math.floor(Math.random() * 8) !== 0) {
-        console.log('-> reset');
         this.#index = DrawEnum.VARIANT_RESET;
-      } else {
-        console.log('-> continue');
       }
       break;
 

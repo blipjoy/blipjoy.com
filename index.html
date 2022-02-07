@@ -2,8 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=700, viewport-fit=cover">
     <title>BlipJoy</title>
     <link rel="preload" href="./index.css" as="style">
+    <link rel="preload" href="./theme.css" as="style">
     <link rel="icon" sizes="64x64" href="img/blipjoy-64x64.png">
     <link rel="stylesheet" href="./index.css">
     <script type="module" src="./index.js"></script>
@@ -11,7 +13,7 @@
     <meta name="title" content="BlipJoy">
     <meta name="description" content="Creating games, art, and technology.">
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://blipjoy.com/">
     <meta property="og:title" content="BlipJoy">
@@ -31,14 +33,116 @@
         <img alt="BlipJoy Logo" src="./img/blipjoy.png">
       </canvas>
       <nav>
-        <a href="https://blog.blipjoy.com/">Blog</a>
-        <a href="https://github.com/blipjoy">GitHub</a>
-        <a href="https://blipjoy.itch.io">Itch.io</a>
-        <a href="https://gotm.io/user/blipjoy">Gotm.io</a>
-        <a href="https://twitch.tv/blipjoy">Twitch</a>
-        <a href="https://patreon.com/blipjoy">Patreon</a>
-        <a href="https://twitter.com/blipjoy">Twitter</a>
+        <p>
+          <a href="/index.html">Games</a>
+          <a href="/about.html">About</a>
+          <a href="https://blog.blipjoy.com">Blog</a>
+        </p>
+        <p>
+          <a href="https://github.com/blipjoy">GitHub</a>
+          <a href="https://blipjoy.itch.io">Itch.io</a>
+          <a href="https://gotm.io/user/blipjoy">Gotm.io</a>
+          <a href="https://twitch.tv/blipjoy">Twitch</a>
+          <a href="https://patreon.com/blipjoy">Patreon</a>
+          <a href="https://twitter.com/blipjoy">Twitter</a>
+        </p>
       </nav>
     </header>
+
+    <main>
+      <h1>Games</h1>
+
+      <h2>Kung Fu Star</h2>
+      <p>This is a game about being a Kung Fu Star. A Kung Fu Star that only has one tool. A Ninja Rope? Maybe.</p>
+      <p class="screenshot"><img alt="Screenshot of Kung Fu Star" src="./img/games/kung_fu_star.png"></p>
+      <nav>
+        <p>
+          <a href="https://blipjoy.github.io/kungfustar/public/index.html">Play online</a>
+          <a href="https://github.com/blipjoy/kungfustar">Source code</a>
+          <a href="https://blog.kodewerx.org/2013/12/ludum-dare-28-im-in.html">Announcement</a>
+        </p>
+      </nav>
+
+      <h2>A Walk in the Park: Turbo</h2>
+      <p>Just another ordinary day, you decide to take a walk in the park. In classic text adventure tradition, you are given free reign to explore the world around you, and interact with everything you can see. The story unfolds naturally as a work of interactive fiction. "A Walk in the Park" is a beautifully orchestrated tale of peace and quiet.</p>
+      <p class="screenshot"><img alt="Video of A Walk in the Park: Turbo" src="./img/games/awitpt.gif"></p>
+      <nav>
+        <p>
+          <a href="https://blipjoy.github.io/awitp/public/index.html">Play online</a>
+          <a href="https://github.com/blipjoy/awitp">Source code</a>
+          <a href="https://blog.kodewerx.org/2013/12/a-walk-in-park-turbo-1gam-november-and.html">Postmortem</a>
+        </p>
+      </nav>
+
+      <h2>Sprung Fever</h2>
+      <p>Sprung Fever is about a boy who falls in love with every girl he sees. Your task is to run ordinary dumb errands like shopping, getting the mail, and returning library books, between exams. But there are girls everywhere! And if you get near any of them, they draw your attention, making you forget why the hell you were even in a grocery store in the first place! Lose your cool too many times, and you'll fail exams, drop out of school, work at a low wage dead end job, and cry yourself to sleep at night. How sad.</p>
+      <p>Keep your mind in the right place by avoiding all female contact, and you just might make it through the semester... Then you can chase all the girls you want and live happily ever after! Hooray!</p>
+      <p class="screenshot"><img alt="Screenshot of Sprung Fever" src="./img/games/sprung_fever.png"></p>
+      <nav>
+        <p>
+          <a href="https://blipjoy.github.io/sprung_fever/public/index.html">Play online</a>
+          <a href="https://github.com/blipjoy/sprung_fever">Source code</a>
+          <a href="https://blog.kodewerx.org/2013/05/1gam-april-postmortem.html">Postmortem</a>
+        </p>
+      </nav>
+
+      <h2>Mini Sim Hotel</h2>
+      <p>A hotel management simulation game where the player builds a hotel from designing the floor plan to hiring staff and fulfilling customer satisfaction. Start with a limited budget as you grow your hotel, keeping a watchful eye on your finances.</p>
+      <p>See to customer needs by directing staff to take care of complaints; a happy guest is a guest that will stay again, increasing your overall revenue. This game presents a tricky and addictive balance between creativity and resource management.</p>
+      <p class="screenshot"><img alt="Screenshot of Mini Sim Hotel" src="./img/games/mini_sim_hotel.png"></p>
+      <nav>
+        <p>
+          <a href="https://www.kodewerx.org/projects/mini_sim_hotel/index.html">Play online</a>
+          <a href="https://blog.kodewerx.org/2013/03/radisson-hackathon-postmortem.html">Postmortem</a>
+        </p>
+      </nav>
+
+      <h2>Alienauts</h2>
+      <p>A 2D physics puzzle-adventure powered by melonJS and Chipmunk-js.</p>
+      <p>Play as a stranded alien survivor, attempting to outsmart the lab coats as they keep a keen watch on your every move. The scientists studying you are most interested in your escape pod's ability to create a temporary but exact replica of certain materials.</p>
+      <p class="screenshot"><img alt="Screenshot of Alienauts" src="./img/games/alienauts.png"></p>
+      <nav>
+        <p>
+          <a href="https://blipjoy.github.io/alienauts/public/index.html">Play online</a>
+          <a href="https://github.com/blipjoy/alienauts">Source code</a>
+          <a href="https://blog.kodewerx.org/2012/12/game-off-postmortem.html">Postmortem</a>
+        </p>
+      </nav>
+
+      <h2>Coffee Civilization</h2>
+      <p>Coffee Civilization is a massive multiplayer online coffee plantation simulation strategy game. You play with a group of your friends in a coffee farming company and work together to dominate competing companies of other live players.</p>
+      <p>The game is a perfect meld of cooperation and competition, as you are hired into your company with one of three occupations; The Buyer purchases seeds, equipment, upgrades, and land from rival companies. The Farmer digs irrigation, tills, soil, plants seeds, ad harvests crops. The Transporter builds and maintains roads, manages and repairs the fleet of shipping trucks, picks up harvests, and handles all imports and exports. Each occupation inherently relies on the other, so you cannot have any weak links in your company, or you will quickly fail.</p>
+      <p class="screenshot"><img alt="Screenshot of Coffee Civilization" src="./img/games/coffee.png"></p>
+      <nav>
+        <p><a href="https://git.kodewerx.org/coffeeciv">Source code</a></p>
+      </nav>
+
+      <h2>Neverwell Moor</h2>
+      <p>Rachel is 15 years old. She grew up hearing stories of a strange island called "Neverwell", told by her grandfather ("Papa" to Rachel). Rachel was 5 at the time, and the stories were always something adventurous and entertaining. Papa would tell her about the inhabitants of the island, and how they could perform magic. He would fight monsters while hunting for treasures buried in deep caves. There were so many details in his stories that he had to set some of his adventures on smaller islands around Neverwell.</p>
+      <p>Papa died shortly after, and it's been 10 years, so she doesn't remember all of the stories he told. But she remembers important details like the eponymous moor, which was a very dangerous place, but that it held some kind of secret... Perhaps the secret to the inhabitants magic? But that was a long time ago, and they were just stories. Everyone knows there is only one island, and they call it "Earth."</p>
+      <p>So Rachel sets off on a day like any other, but, feeling a little adventurous, she decides to help a friend. That kind gesture leads to a series of quests which eventually lands Rachel on Neverwell; a place that isn't supposed to exist...</p>
+      <p class="screenshot"><img alt="Screenshot of Neverwell Moor" src="./img/games/neverwell_moor.png"></p>
+      <nav>
+        <p>
+          <a href="https://blipjoy.github.io/nm-prototype">Play online</a>
+          <a href="https://github.com/blipjoy/nm-prototype/">Source code</a>
+          <a href="https://opengameart.org/content/neverwell-moor">Liberated Pixel Cup entry</a>
+          <a href="https://www.indiedb.com/games/neverwell-moor">IndieDB entry</a>
+        </p>
+      </nav>
+
+      <h2>Tethyrd</h2>
+      <p>Tethyrd (pronounced "tethered") is a top-down shmuplike that requires the player to be tethered to a power outlet to shoot projectiles. The trick is guiding the plug into the socket while avoiding the enemy onslaught.</p>
+      <p>Moly*eux inspired tweet: "What if you lived in a world where all guns are required to be plugged into wall sockets? Now THAT would be a tactical shooter wouldn't it?"</p>
+      <p class="screenshot"><img alt="Screenshot of Tethyrd" src="./img/games/tethyrd.png"></p>
+      <nav>
+        <p>
+          <a href="https://kodewerx.org/projects/tethyrd.swf">Play online (Requires Flash Plugin)</a>
+        </p>
+      </nav>
+
+    </main>
+
+    <footer>Copyright BlipJoy, LLC. All rights reserved.</footer>
   </body>
 </html>

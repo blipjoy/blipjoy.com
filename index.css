@@ -1,48 +1,86 @@
+@import './theme.css';
+
 body {
-  background: #161616 no-repeat fixed top left;
-  color: #999;
+  background: var(--background-color) no-repeat fixed top left;
+  color: var(--text-color);
   font-family: Verdana, Tahoma, Helvetica, sans-serif;
-  font-weight: 600;
+  margin: 100px 0 25px 0;
 }
 
-a {
-  color: #4b0082;
+a:link, a:active {
+  color: var(--link-color);
 }
 
 a:visited {
-  color: #4d469c;
+  color: var(--visited-link-color);
 }
 
 a:hover {
-  color: #4495ff;
+  color: var(--hovered-link-color);
+}
+
+header, main, footer {
+  margin: auto;
+  width: 700px;
 }
 
 header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: auto;
-  margin-top: 100px;
-  margin-bottom: 64px;
-  width: 700px;
+}
+
+main {
+  background-color: var(--main-background-color);
+  border: 1px solid var(--main-border-color);
+  padding: 1em;
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+
+footer {
+  font-size: smaller;
+  font-weight: 400;
 }
 
 #anim {
   image-rendering: pixelated;
-  margin-bottom: 32px;
+  margin-bottom: 2em;
 }
 
-nav > a {
-  font-weight: normal;
+nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header nav > p, main > h1 {
+  margin-block-start: 0;
+}
+
+header nav > p:last-child {
+  margin-block-end: 0;
+}
+
+nav > p > a {
   text-decoration: none;
 }
 
-nav > a:not(:last-child)::after {
+nav > p > a:not(:last-child)::after {
   content: ' |';
-  color: #444;
+  color: var(--main-border-color);
 }
 
-main {
-  margin: auto;
-  width: 700px;
+main > nav:not(:last-child) {
+  border-bottom: 1px solid var(--main-border-color);
+}
+
+main > p.screenshot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+main > p > img {
+  max-width: 680px;
 }

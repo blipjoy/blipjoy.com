@@ -77,12 +77,8 @@ nav > p > a:not(:last-child)::after {
   color: var(--main-border-color);
 }
 
-main > nav:not(:last-child) {
-  border-bottom: 1px solid var(--main-border-color);
-}
-
-main > h1 {
-  border-bottom: 1px solid var(--main-border-color);
+main > nav:not(:last-child), main > h1 {
+  border-bottom: 1px dashed var(--main-border-color);
 }
 
 main > p.screenshot {
@@ -98,4 +94,9 @@ img.scalable {
 
 img.full {
   max-width: initial;
+}
+
+img.thumb {
+  float: right;
+  margin-left: 1em;
 }

@@ -19,6 +19,12 @@ a:hover {
   color: var(--hovered-link-color);
 }
 
+a.link_target {
+  color: var(--text-color);
+  font-size: 0.8em;
+  text-decoration: none;
+}
+
 header, main, footer {
   margin: auto;
   width: 700px;
@@ -72,6 +78,10 @@ nav > p > a:not(:last-child)::after {
 }
 
 main > nav:not(:last-child) {
+  border-bottom: 1px solid var(--main-border-color);
+}
+
+main > h1 {
   border-bottom: 1px solid var(--main-border-color);
 }
 

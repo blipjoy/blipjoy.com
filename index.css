@@ -81,6 +81,11 @@ main > p.screenshot {
   align-items: center;
 }
 
-main > p > img {
+img.scalable {
+  position: relative;
   max-width: 680px;
+}
+
+img.full {
+  max-width: initial;
 }

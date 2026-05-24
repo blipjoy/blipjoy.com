@@ -1,5 +1,4 @@
 import { Enum, Variant } from './enum.js';
-import { get_css_prop } from './css.js';
 
 /** @type {Number} */
 const GLITCH_MIN = 25000;
@@ -29,17 +28,14 @@ export class BlipJoyAnimation {
   /** @type {Number} */
   #index = 0;
 
-  /** @type {Boolean} */
-  #running = false;
-
   /** @type {ImageData | null} */
   #pixels = null;
 
   /** @type {String} */
-  #invader_color;
+  #invader_color = '#4b0082';
 
   /** @type {String} */
-  #text_color;
+  #text_color = '#fff';
 
   constructor() {
     /** @type {HTMLCanvasElement | null} */
@@ -67,8 +63,6 @@ export class BlipJoyAnimation {
       new AnimState(Math.random() * RESET_MAX + RESET_MIN, DrawEnum.GLITCH_CONTINUE()),
       new AnimState(Math.random() * RESET_MAX + RESET_MIN, DrawEnum.RESET()),
     ];
-    this.#invader_color = get_css_prop('--logo-color');
-    this.#text_color = get_css_prop('--logo-text-color');
 
     this.#invader();
     this.#step();
